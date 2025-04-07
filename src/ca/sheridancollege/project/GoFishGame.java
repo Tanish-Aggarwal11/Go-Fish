@@ -19,35 +19,54 @@ public class GoFishGame extends Game {
 
     @Override
     public void play() {
-        int numPlayers = InputHelper.getValidPlayerCount();
-        setPlayers(GoFishPlayerFactory.createPlayers(numPlayers));
-        boolean gameOver = false;
-        CenterDeck deck = new CenterDeck();
-        dealCards(deck);
+        Scanner in = new Scanner(System.in);
+        boolean playAgain;
 
-        while (!gameOver) {
+        do {
+            int numPlayers = InputHelper.getValidPlayerCount();
+            setPlayers(GoFishPlayerFactory.createPlayers(numPlayers));
+            CenterDeck deck = new CenterDeck();
+            dealCards(deck);
+
+            // Check for initial books
             for (Player p : getPlayers()) {
-                GoFishPlayer gp = (GoFishPlayer) p;
+                ((GoFishPlayer) p).checkForBook();
+            }
 
-                if (gp.getHand().getCards().isEmpty() && !deck.getCards().isEmpty()) {
-                    gp.addCardToHand(deck.drawCard()); // Refill if hand empty
-                }
+            boolean gameOver = false;
 
-                if (!gp.getHand().getCards().isEmpty()) {
-                    gp.takeTurn(getPlayers(), deck);
-                }
+            while (!gameOver) {
+                for (Player p : getPlayers()) {
+                    GoFishPlayer gp = (GoFishPlayer) p;
 
-                // Win condition: deck is empty AND all hands are empty
-                gameOver = deck.getCards().isEmpty()
-                        && getPlayers().stream().allMatch(pl -> ((GoFishPlayer) pl).getHand().getCards().isEmpty());
+                    if (gp.getHand().getCards().isEmpty() && !deck.getCards().isEmpty()) {
+                        gp.addCardToHand(deck.drawCard());
+                    }
 
-                if (gameOver) {
-                    break;
+                    if (!gp.getHand().getCards().isEmpty()) {
+                        gp.takeTurn(getPlayers(), deck);
+                    }
+
+                    gameOver = deck.getCards().isEmpty()
+                            && getPlayers().stream().allMatch(pl -> ((GoFishPlayer) pl).getHand().getCards().isEmpty());
+
+                    if (gameOver) {
+                        break;
+                    }
                 }
             }
-        }
 
-        declareWinner();
+            declareWinner();
+
+            // Ask to play again
+            System.out.print("\nWould you like to play again? (Y/N): ");
+            String input = in.nextLine().trim().toUpperCase();
+            playAgain = input.equals("Y");
+            if (playAgain) {
+                getPlayers().clear();
+            }
+
+        } while (playAgain);
 
     }
 
@@ -80,8 +99,8 @@ public class GoFishGame extends Game {
             }
         }
         for (Player player : players) {
-    ((GoFishPlayer) player).checkForBook();
-}
+            ((GoFishPlayer) player).checkForBook();
+        }
 
     }
 
