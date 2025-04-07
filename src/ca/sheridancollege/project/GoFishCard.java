@@ -9,25 +9,22 @@ package ca.sheridancollege.project;
  * @author tanis
  */
 public class GoFishCard extends Card {
-    
-    public enum Suit
-   {
-       HEARTS, CLUBS,SPADES, DIAMONDS
-   }
-   
-   public enum Value
-   {
-       ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING,
-		JACL
-   }
+
+    public enum Suit {
+        HEARTS, CLUBS, SPADES, DIAMONDS
+    }
+
+    public enum Value {
+        ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING
+    }
     private Value value;
     private Suit suit;
-    
-    public GoFishCard(Value v, Suit s)
-    {
+
+    public GoFishCard(Value v, Suit s) {
         value = v;
         suit = s;
     }
+
     /**
      * @return the value
      */
@@ -58,8 +55,7 @@ public class GoFishCard extends Card {
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return value + " of " + suit;
     }
-    
-    
+
 }

@@ -8,17 +8,18 @@ package ca.sheridancollege.project;
  *
  * @author tanis
  */
-public class BookOfCard {
+public class GoFishBookOfCard {
     
-    Card[] book = new Card[2];
-    
-    public BookOfCard(GoFishCard c1, GoFishCard c2) {
-        
+    private final GoFishCard[] book = new GoFishCard[2];
+
+    public GoFishBookOfCard(GoFishCard c1, GoFishCard c2) {
+        this.book[0] = c1;
+        this.book[1] = c2;
     }
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return book[0] + " & " + book[1];
     }
     
 }
