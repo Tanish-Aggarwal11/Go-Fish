@@ -46,9 +46,18 @@ public class GoFishGame extends Game {
                     if (!gp.getHand().getCards().isEmpty()) {
                         gp.takeTurn(getPlayers(), deck);
                     }
+                    
+                    int totalBooks = getPlayers().stream()
+                            .mapToInt(p1 -> ((GoFishPlayer) p1).getBookCount())
+                            .sum();
 
-                    gameOver = deck.getCards().isEmpty()
-                            && getPlayers().stream().allMatch(pl -> ((GoFishPlayer) pl).getHand().getCards().isEmpty());
+                    gameOver = totalBooks >= 5;
+                    
+                    
+//                    Uncomment if you want to play the whole game otherwise it will end when 6 books have been made
+
+//                    gameOver = deck.getCards().isEmpty()
+//                            && getPlayers().stream().allMatch(pl -> ((GoFishPlayer) pl).getHand().getCards().isEmpty());
 
                     if (gameOver) {
                         break;
@@ -81,6 +90,7 @@ public class GoFishGame extends Game {
                 winner = p;
                 maxBooks = books;
             }
+            System.out.println("\n" + p.getName() + " has " + books + " books!");
         }
 
         System.out.println("\n Game Over! Winner is " + winner.getName() + " with " + maxBooks + " books!");

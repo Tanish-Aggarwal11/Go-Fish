@@ -120,7 +120,7 @@ public class GoFishPlayer extends Player {
 
     @Override
     public void play() {
-
+// Not used in Go Fish. Game logic handled in takeTurn().
     }
 
 }
